@@ -189,6 +189,19 @@ class Concert(object):
                     else:
                         j.click()
                         break
+            # 这里可以先click票价列表中的第一个元素，因为网页会自动选可选票价，按照原先的代码，即使该票价不在优先序列中也会被选中然后进入下单界面
+            '''
+            price_alt = []
+            for i in self.price:
+                price_alt.append(price_list[i-1])
+            price_alt[0].click()
+            for ele in price_alt:
+                if self.isClassPresent(ele, 'notticket'):
+                    continue
+                else:
+                    ele.click()
+                    break
+            '''
 
             buybutton = self.driver.find_element_by_class_name('buybtn')
             buybutton_text = buybutton.text
@@ -228,6 +241,12 @@ class Concert(object):
             elif buybutton_text == "提交缺货登记":
                 print('###抢票失败，请手动提交缺货登记###')
                 break
+            '''
+            elif buybutton_text == "提交缺货登记":
+                self.driver.refresh()
+                continue
+            # 此处同时修改
+            '''
 
                 
     def choose_ticket_2(self):  # for type 2, i.e., piao.damai.cn
